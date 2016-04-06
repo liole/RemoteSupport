@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteSupport.Server", "RemoteSupport.Server\RemoteSupport.Server.csproj", "{E365E026-D9CB-45F7-B1D0-C491DF6E99DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteSupport.Client", "RemoteSupport.Client\RemoteSupport.Client.csproj", "{6A540EA5-CE3E-4181-8D34-9B3288171582}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E365E026-D9CB-45F7-B1D0-C491DF6E99DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E365E026-D9CB-45F7-B1D0-C491DF6E99DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E365E026-D9CB-45F7-B1D0-C491DF6E99DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E365E026-D9CB-45F7-B1D0-C491DF6E99DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A540EA5-CE3E-4181-8D34-9B3288171582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A540EA5-CE3E-4181-8D34-9B3288171582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A540EA5-CE3E-4181-8D34-9B3288171582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A540EA5-CE3E-4181-8D34-9B3288171582}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
