@@ -1,4 +1,4 @@
-﻿namespace RemoteSupport.Client
+﻿namespace RemoteSupport.Client.View
 {
 	partial class MainForm
 	{

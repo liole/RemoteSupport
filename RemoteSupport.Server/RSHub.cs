@@ -26,5 +26,40 @@ namespace RemoteSupport.Server
 			Logger.OnDisconnected(Context.ConnectionId, stopCalled);
 			return base.OnDisconnected(stopCalled);
 		}
+
+		public void CheckUserName (string userName)
+		{
+
+		}
+
+		public void AskForPermission(string userName)
+		{
+
+		}
+
+		public void StartStream()
+		{
+			
+		}
+
+		public void DenyAccess()
+		{
+
+		}
+
+		public void SendImage(object image)
+		{
+
+		}
+
+		public void MoveMouse (int x, int y)
+		{
+
+		}
+
+		public void Disconnect()
+		{
+
+		}
 	}
 }

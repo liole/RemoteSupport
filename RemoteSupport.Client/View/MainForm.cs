@@ -10,9 +10,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RemoteSupport.Client
+namespace RemoteSupport.Client.View
 {
-	public partial class MainForm : Form
+	public partial class MainForm : Form, ILoginForm
 	{
 		private IHubProxy HubProxy { get; set; }
 		const string ServerURI = "http://localhost:51001/signalr";
@@ -79,5 +79,33 @@ namespace RemoteSupport.Client
 			}
 		}
 
+
+		void LoginStatusChanged(bool status)
+		{
+
+		}
+
+		void ILoginForm.LoginStatusChanged(bool status)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void AskForPermission(string remoteUserName)
+		{
+			//var result = permissionDialog.ShowDialog();
+			//if (result == allow)
+			Hide();
+			//statusForm.UserName = remoteUserName;
+			//statusFrom.Show();
+			//localController.StartStream();
+			//else
+			//localController.DenyAccess();
+		}
+	}
+
+	interface ILoginForm: IInvokable
+	{
+		void LoginStatusChanged(bool status);
+		void AskForPermission(string remoteUserName);
 	}
 }
