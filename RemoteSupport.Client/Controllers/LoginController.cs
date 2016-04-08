@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace RemoteSupport.Client.Controllers
 {
@@ -17,11 +18,11 @@ namespace RemoteSupport.Client.Controllers
 			Program.ConnectionController.ConnectionSucceded += ConnectionSucceded;
 			Program.ConnectionController.ConnectionFailed += ConnectionFailed;
 			Program.ConnectionController.ConnectAsync();
-			//Program.ConnectionController.hub.On("LoginStatusChanged", this.HandleStatusChange);
+			Program.ConnectionController.CommandHub.On("LoginStatusChanged", (Action<bool>)this.HandleStatusChange);
 		}
 		public void TryChange(string newName)
 		{
-            //Program.ConnectionController.
+            Program.ConnectionController.CommandHub.Invoke("ChangeUserName", newName);
 		}
 
 		public void HandleStatusChange(bool status)
@@ -31,11 +32,12 @@ namespace RemoteSupport.Client.Controllers
 
 		public string PCName ()
 		{
-			return null;
+			return Environment.MachineName;
 		}
 
 		public void ConnectionSucceded(object sender, EventArgs e)
 		{
+            TryChange(PCName());
 			loginForm.ChangeStatus("Connected");
 		}
 		public void ConnectionFailed(object sender, EventArgs e)
