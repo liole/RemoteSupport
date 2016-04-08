@@ -23,6 +23,8 @@ namespace RemoteSupport.Server
 		}
 		public override Task OnDisconnected(bool stopCalled)
 		{
+			var userName = ActiveUsers.FirstOrDefault(u => u.Value == Context.ConnectionId).Key;
+			ActiveUsers.Remove(userName);
 			Logger.OnDisconnected(Context.ConnectionId, stopCalled);
 			return base.OnDisconnected(stopCalled);
 		}
@@ -37,8 +39,9 @@ namespace RemoteSupport.Server
 			Broadcasts = new List<BroadcastStatus>();
 		}
 
-		public void ChangekUserName (string userName)
+		public void ChangeUserName (string userName)
 		{
+			Logger.OnMethodCalled("ChangeUserName", userName);
 			if (ActiveUsers.ContainsKey(userName))
 			{
 				if (ActiveUsers[userName] != Context.ConnectionId)
@@ -51,7 +54,7 @@ namespace RemoteSupport.Server
 			{
 				if (ActiveUsers.ContainsValue(Context.ConnectionId))
 				{
-					var oldUserName = ActiveUsers.FirstOrDefault(x => x.Value == "one").Key;
+					var oldUserName = ActiveUsers.FirstOrDefault(u => u.Value == Context.ConnectionId).Key;
 					ActiveUsers.Remove(oldUserName);
 				}
 				ActiveUsers[userName] = Context.ConnectionId;
@@ -61,6 +64,7 @@ namespace RemoteSupport.Server
 
 		public void AskForPermission(string userName)
 		{
+			Logger.OnMethodCalled("AskForPermission", userName);
 			if (ActiveUsers.ContainsKey(userName))
 			{
 				var connectionId = ActiveUsers[userName];
@@ -83,6 +87,7 @@ namespace RemoteSupport.Server
 
 		public void StartStream()
 		{
+			Logger.OnMethodCalled("StartStream");
 			var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == Context.ConnectionId);
 			
 			if (broadcast.Pending != null)
@@ -97,6 +102,7 @@ namespace RemoteSupport.Server
 
 		public void DenyAccess()
 		{
+			Logger.OnMethodCalled("DenyAccess");
 			var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == Context.ConnectionId);
 
 			if (broadcast.Pending != null)
@@ -108,11 +114,13 @@ namespace RemoteSupport.Server
 
 		public void SendImage(object image)
 		{
+			Logger.OnMethodCalled("SendImage", image);
 			Clients.Group(Context.ConnectionId).ShowImage(image);
 		}
 
 		public void MoveMouse (int x, int y)
 		{
+			Logger.OnMethodCalled("MoveMouse", x, y);
 			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
 
 			if (broadcast != null)
@@ -123,7 +131,20 @@ namespace RemoteSupport.Server
 
 		public void Disconnect()
 		{
+			// for only one viewer!
+			Logger.OnMethodCalled("Disconnect");
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == Context.ConnectionId);
+			if (broadcast != null)
+			{
+				Clients.Group(Context.ConnectionId).BroadcasterDisconnected();
+				Broadcasts.Remove(broadcast);
+			}
+			broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
 
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).ClientDisconnected();
+			}
 		}
 	}
 }
