@@ -9,28 +9,28 @@ using System.Threading.Tasks;
 
 namespace RemoteSupport.Client.Controllers
 {
-	class RemoteController : IDisposable
+	class RemoteController
 	{
 		private IStreamForm streamForm;
 
 		public RemoteController (IStreamForm streamForm)
 		{
-			this.streamForm = streamForm;
+;			this.streamForm = streamForm;
 		}
 
 		public void MouseMove(int x, int y)
 		{
-		   
+            Program.ConnectionController.CommandHub.Invoke("MoveMouse", x, y);
 		}
 
         public void MouseClick()
         {
-
+            Program.ConnectionController.CommandHub.Invoke("ClickMouse");
         }
 
         public void KeyPress()
         {
-
+            //return new NotImplementedException();
         }
 
         public void ReceiveImage(object image)
@@ -38,19 +38,9 @@ namespace RemoteSupport.Client.Controllers
             streamForm.ShowImage(image as Bitmap);    
         }
 
-		public void Connect(string remoteUserName)
-		{
-
-		}
-
-        public void CloseConnection()
+        public void Disconnect()
         {
-            
-        }
-
-        public void Dispose()
-        {
-
+            Program.ConnectionController.CommandHub.Invoke("Disconnect");
         }
 	}
 }

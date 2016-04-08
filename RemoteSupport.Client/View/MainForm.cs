@@ -30,25 +30,25 @@ namespace RemoteSupport.Client.View
 
 		private async void ConnectAsync()
 		{
-			Connection = new HubConnection(ServerURI);
-			Connection.Closed += Connection_Closed;
-			HubProxy = Connection.CreateHubProxy("RSHub");
-			HubProxy.On("Message", (Action<string>)this.ShowMessage);
+            //Connection = new HubConnection(ServerURI);
+            //Connection.Closed += Connection_Closed;
+            //HubProxy = Connection.CreateHubProxy("RSHub");
+            //HubProxy.On("Message", (Action<string>)this.ShowMessage);
 
-			try
-			{
-				testButton.Enabled = false;
-				testButton.Text = "Connecting...";
-				await Connection.Start();
-			}
-			catch (HttpRequestException)
-			{
-				testButton.Text = "Unable to connect";
-				return;
-			}
+            //try
+            //{
+            //    testButton.Enabled = false;
+            //    testButton.Text = "Connecting...";
+            //    await Connection.Start();
+            //}
+            //catch (HttpRequestException)
+            //{
+            //    testButton.Text = "Unable to connect";
+            //    return;
+            //}
 
-			testButton.Enabled = true;
-			testButton.Text = "TEST";
+            //testButton.Enabled = true;
+            //testButton.Text = "TEST";
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
