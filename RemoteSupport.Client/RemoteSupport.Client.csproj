@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
