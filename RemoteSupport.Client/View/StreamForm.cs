@@ -15,16 +15,11 @@ namespace RemoteSupport.Client.View
 	{
         public RemoteController remote;
 
+
 		public StreamForm()
 		{
             InitializeComponent();
             remote = new RemoteController(this); 
-		}
-
-
-		public void ShowImage(Bitmap img)
-		{
-            pictureBox1.Image = img;
 		}
 
 
@@ -34,9 +29,19 @@ namespace RemoteSupport.Client.View
 		}
 
 
+        public void ShowImage(Bitmap img)
+        {
+            pictureBox1.Image = img;
+        }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             remote.MouseClick();
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            remote.MouseMove(e.X, e.Y);
         }
 
 
@@ -44,12 +49,9 @@ namespace RemoteSupport.Client.View
         {
             remote.Disconnect();
         }
-
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            remote.MouseMove(e.X, e.Y);
-        }
 	}
+
+
 
 	public interface IStreamForm
 	{
