@@ -13,9 +13,12 @@ namespace RemoteSupport.Client.View
 {
 	public partial class StreamForm : Form, IStreamForm
 	{
+        public RemoteController remote;
+
 		public StreamForm()
 		{
-			InitializeComponent();
+            InitializeComponent();
+            remote = new RemoteController(this); 
 		}
 
 
@@ -33,13 +36,18 @@ namespace RemoteSupport.Client.View
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
+            remote.MouseClick();
         }
 
 
         private void disconnect_Btn_Click(object sender, EventArgs e)
         {
-            
+            remote.Disconnect();
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            remote.MouseMove(e.X, e.Y);
         }
 	}
 

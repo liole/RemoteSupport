@@ -38,11 +38,15 @@ namespace RemoteSupport.Client.Controllers
 
 		}
 
-		void MoveMouse(int x, int y)
+		public void MoveMouse(int x, int y)
 		{
 			//int kx = k * x;
 			//...
 		}
 
+        public void ClickMouse()
+        {
+            
+        }
 	}
 }
