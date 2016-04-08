@@ -1,4 +1,5 @@
-﻿using RemoteSupport.Client.View;
+﻿using Microsoft.AspNet.SignalR;
+using RemoteSupport.Client.View;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RemoteSupport.Client.Controllers
 {
-	class RemoteController
+	class RemoteController : IDisposable
 	{
 		private IStreamForm streamForm;
 
@@ -19,12 +20,37 @@ namespace RemoteSupport.Client.Controllers
 
 		public void MouseMove(int x, int y)
 		{
-			
+		   
 		}
+
+        public void MouseClick()
+        {
+
+        }
+
+        public void KeyPress()
+        {
+
+        }
+
+        public void ReceiveImage(object image)
+        {
+            streamForm.ShowImage(image as Bitmap);    
+        }
 
 		public void Connect(string remoteUserName)
 		{
 
 		}
+
+        public void CloseConnection()
+        {
+            
+        }
+
+        public void Dispose()
+        {
+
+        }
 	}
 }
