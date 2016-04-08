@@ -129,6 +129,17 @@ namespace RemoteSupport.Server
 			}
 		}
 
+		public void ClickMouse()
+		{
+			Logger.OnMethodCalled("ClickMouse");
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).ClickMouse();
+			}
+		}
+
 		public void Disconnect()
 		{
 			// for only one viewer!
