@@ -20,13 +20,15 @@ namespace RemoteSupport.Client.View
 		private HubConnection Connection { get; set; }
 
 		public LoginController login;
+        private bool firstTime = false;
 
-		public MainForm()
+        public MainForm()
 		{
 			InitializeComponent();
 			login = new LoginController(this);
             userNameTxt.Text = login.PCName();
             connectBtn.Enabled = false;
+            firstTime = true;
             //ChangeStatus("Ready to connect", true);
 		}
 
@@ -87,9 +89,23 @@ namespace RemoteSupport.Client.View
 		}
 
 
+
 		public void LoginStatusChanged(bool status)
 		{
+            if (!firstTime)
+            {
+                if (!status)
+                {
+                    MessageBox.Show("ERRROR");
+                }
+                else
+                {
+                    MessageBox.Show("Changed");
+                }
+            }
+            firstTime = false;
 		}
+
 
 		//void ILoginForm.LoginStatusChanged(bool status)
 		//{
@@ -124,8 +140,8 @@ namespace RemoteSupport.Client.View
 		}
 
         private void changeBtn_Click(object sender, EventArgs e)
-        { 
-           
+        {
+            login.TryChange(userNameTxt.Text);
         }
     }
 
