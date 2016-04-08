@@ -9,21 +9,25 @@ using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RemoteSupport.Client.Controllers;
 
 namespace RemoteSupport.Client.View
 {
-	public partial class MainForm : Form//, ILoginForm
+	public partial class MainForm : Form, ILoginForm
 	{
 		private IHubProxy HubProxy { get; set; }
 		
 		private HubConnection Connection { get; set; }
 
+		public LoginController login;
+
 		public MainForm()
 		{
 			InitializeComponent();
-            userNameTxt.Text = Environment.MachineName;
+			login = new LoginController(this);
+            userNameTxt.Text = login.PCName();
             connectBtn.Enabled = false;
-            ChangeStatus("Ready to connectio");
+            //ChangeStatus("Ready to connect", true);
 		}
 
 		public void ShowMessage(string msg)
@@ -83,7 +87,7 @@ namespace RemoteSupport.Client.View
 		}
 
 
-		void LoginStatusChanged(bool status)
+		public void LoginStatusChanged(bool status)
 		{
 		}
 
@@ -105,7 +109,7 @@ namespace RemoteSupport.Client.View
 		}
 
 
-		public void ChangeStatus(string status)
+		public void ChangeStatus(string status, bool error)
 		{
             if (status ==  "Ready to connection")
             {
@@ -114,7 +118,7 @@ namespace RemoteSupport.Client.View
             }
             else
             {
-                StatusValueLbl.Text = "ERROR";
+                StatusValueLbl.Text = status;
             }
           //  throw new NotImplementedException();
 		}
@@ -125,10 +129,10 @@ namespace RemoteSupport.Client.View
         }
     }
 
-    interface ILoginForm: IInvokable
+    public interface ILoginForm: IInvokable
 	{
 		void LoginStatusChanged(bool status);
 		void AskForPermission(string remoteUserName);
-		void ChangeStatus(string status);
+		void ChangeStatus(string status, bool error);
 	}
 }

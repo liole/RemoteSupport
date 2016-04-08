@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemoteSupport.Client.View
 {
-	interface IInvokable
+	public interface IInvokable
 	{
 		object Invoke(Delegate method);
 		object Invoke(Delegate method, params object[] args);

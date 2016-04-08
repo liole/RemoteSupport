@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RemoteSupport.Client.Controllers
 {
-	class RemoteController
+	public class RemoteController
 	{
 		private IStreamForm streamForm;
 

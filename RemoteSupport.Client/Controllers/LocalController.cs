@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RemoteSupport.Client.Controllers
 {
-	class LocalController
+	public class LocalController
 	{
 		public static Size DefaultSize { get { return new Size(800, 450); } }
 		private ILoginForm loginForm;
