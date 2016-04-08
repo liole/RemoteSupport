@@ -17,11 +17,11 @@ namespace RemoteSupport.Client.Controllers
 			Program.ConnectionController.ConnectionSucceded += ConnectionSucceded;
 			Program.ConnectionController.ConnectionFailed += ConnectionFailed;
 			Program.ConnectionController.ConnectAsync();
-			//hub.On("loginStatusChanged", this.handle...)
+			//Program.ConnectionController.hub.On("LoginStatusChanged", this.HandleStatusChange);
 		}
 		public void TryChange(string newName)
 		{
-
+            //Program.ConnectionController.
 		}
 
 		public void HandleStatusChange(bool status)

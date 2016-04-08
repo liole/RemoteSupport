@@ -36,6 +36,9 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Location = new System.Drawing.Point(11, 22);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(800, 450);
@@ -60,7 +63,7 @@
             this.disconnect_Btn.TabIndex = 3;
             this.disconnect_Btn.Text = "DISCONNECT";
             this.disconnect_Btn.UseVisualStyleBackColor = true;
-            this.disconnect_Btn.Click += new System.EventHandler(this.button1_Click);
+            this.disconnect_Btn.Click += new System.EventHandler(this.disconnect_Btn_Click);
             // 
             // StreamForm
             // 
@@ -70,6 +73,7 @@
             this.Controls.Add(this.disconnect_Btn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "StreamForm";
             this.Text = "StreamForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

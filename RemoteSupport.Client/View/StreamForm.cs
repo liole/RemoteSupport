@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RemoteSupport.Client.Controllers;
 
 namespace RemoteSupport.Client.View
 {
@@ -17,16 +18,29 @@ namespace RemoteSupport.Client.View
 			InitializeComponent();
 		}
 
+
 		public void ShowImage(Bitmap img)
 		{
-			throw new NotImplementedException();
+            pictureBox1.Image = img;
 		}
 
 
 		public Size ImageSize
 		{
-			get { return new Size(0,0);/*return pictureBox.Size*/ }
+			get { return pictureBox1.Size;}
 		}
+
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void disconnect_Btn_Click(object sender, EventArgs e)
+        {
+            
+        }
 	}
 
 	public interface IStreamForm
