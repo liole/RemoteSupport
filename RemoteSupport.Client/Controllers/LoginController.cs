@@ -8,7 +8,7 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace RemoteSupport.Client.Controllers
 {
-	class LoginController
+	public class LoginController
 	{
 		private ILoginForm loginForm;
 
@@ -38,11 +38,11 @@ namespace RemoteSupport.Client.Controllers
 		public void ConnectionSucceded(object sender, EventArgs e)
 		{
             TryChange(PCName());
-			loginForm.ChangeStatus("Connected");
+			loginForm.ChangeStatus("Connected", false);
 		}
 		public void ConnectionFailed(object sender, EventArgs e)
 		{
-			loginForm.ChangeStatus("Unable to connect");
+			loginForm.ChangeStatus("Unable to connect", true);
 		}
 	}
 }
