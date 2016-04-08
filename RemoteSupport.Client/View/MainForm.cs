@@ -15,7 +15,7 @@ namespace RemoteSupport.Client.View
 	public partial class MainForm : Form, ILoginForm
 	{
 		private IHubProxy HubProxy { get; set; }
-		const string ServerURI = "http://localhost:51001/signalr";
+		
 		private HubConnection Connection { get; set; }
 
 		public MainForm()
@@ -101,11 +101,18 @@ namespace RemoteSupport.Client.View
 			//else
 			//localController.DenyAccess();
 		}
+
+
+		public void ChangeStatus(string status)
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	interface ILoginForm: IInvokable
 	{
 		void LoginStatusChanged(bool status);
 		void AskForPermission(string remoteUserName);
+		void ChangeStatus(string status);
 	}
 }

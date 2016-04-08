@@ -25,7 +25,7 @@ namespace RemoteSupport.Client.View
 
 		public Size ImageSize
 		{
-			get { return null;/*return pictureBox.Size*/ }
+			get { return new Size(0,0);/*return pictureBox.Size*/ }
 		}
 	}
 

@@ -14,6 +14,9 @@ namespace RemoteSupport.Client.Controllers
 		public LoginController (ILoginForm loginForm)
 		{
 			this.loginForm = loginForm;
+			Program.ConnectionController.ConnectionSucceded += ConnectionSucceded;
+			Program.ConnectionController.ConnectionFailed += ConnectionFailed;
+			Program.ConnectionController.ConnectAsync();
 			//hub.On("loginStatusChanged", this.handle...)
 		}
 		public void TryChange(string newName)
@@ -29,6 +32,15 @@ namespace RemoteSupport.Client.Controllers
 		public string PCName ()
 		{
 			return null;
+		}
+
+		public void ConnectionSucceded(object sender, EventArgs e)
+		{
+			loginForm.ChangeStatus("Connected");
+		}
+		public void ConnectionFailed(object sender, EventArgs e)
+		{
+			loginForm.ChangeStatus("Unable to connect");
 		}
 	}
 }
