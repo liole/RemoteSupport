@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace RemoteSupport.Client.View
 {
-	public partial class MainForm : Form, ILoginForm
+	public partial class MainForm : Form//, ILoginForm
 	{
 		private IHubProxy HubProxy { get; set; }
 		
@@ -21,6 +21,9 @@ namespace RemoteSupport.Client.View
 		public MainForm()
 		{
 			InitializeComponent();
+            userNameTxt.Text = Environment.MachineName;
+            connectBtn.Enabled = false;
+            ChangeStatus("Ready to connectio");
 		}
 
 		public void ShowMessage(string msg)
@@ -28,41 +31,41 @@ namespace RemoteSupport.Client.View
 			MessageBox.Show(msg);
 		}
 
-		private async void ConnectAsync()
-		{
-            //Connection = new HubConnection(ServerURI);
-            //Connection.Closed += Connection_Closed;
-            //HubProxy = Connection.CreateHubProxy("RSHub");
-            //HubProxy.On("Message", (Action<string>)this.ShowMessage);
+		//private async void ConnectAsync()
+		//{
+		//	Connection = new HubConnection(ServerURI);
+		//	Connection.Closed += Connection_Closed;
+		//	HubProxy = Connection.CreateHubProxy("RSHub");
+		//	HubProxy.On("Message", (Action<string>)this.ShowMessage);
 
-            //try
-            //{
-            //    testButton.Enabled = false;
-            //    testButton.Text = "Connecting...";
-            //    await Connection.Start();
-            //}
-            //catch (HttpRequestException)
-            //{
-            //    testButton.Text = "Unable to connect";
-            //    return;
-            //}
+		//	try
+		//	{
+		//		testButton.Enabled = false;
+		//		testButton.Text = "Connecting...";
+		//		await Connection.Start();
+		//	}
+		//	catch (HttpRequestException)
+		//	{
+		//		testButton.Text = "Unable to connect";
+		//		return;
+		//	}
 
-            //testButton.Enabled = true;
-            //testButton.Text = "TEST";
-		}
+		//	testButton.Enabled = true;
+		//	testButton.Text = "TEST";
+		//}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			ConnectAsync();
+			//ConnectAsync();
 		}
 
 		void Connection_Closed()
 		{
-			this.Invoke((Action)(() =>
-			{
-				testButton.Text = "Disconnected";
-				testButton.Enabled = false;
-			}));
+			//this.Invoke((Action)(() =>
+			//{
+			//	testButton.Text = "Disconnected";
+			//	testButton.Enabled = false;
+			//}));
 		}
 
 		private void testButton_Click(object sender, EventArgs e)
@@ -82,13 +85,12 @@ namespace RemoteSupport.Client.View
 
 		void LoginStatusChanged(bool status)
 		{
-
 		}
 
-		void ILoginForm.LoginStatusChanged(bool status)
-		{
-			throw new NotImplementedException();
-		}
+		//void ILoginForm.LoginStatusChanged(bool status)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public void AskForPermission(string remoteUserName)
 		{
@@ -105,11 +107,25 @@ namespace RemoteSupport.Client.View
 
 		public void ChangeStatus(string status)
 		{
-			throw new NotImplementedException();
+            if (status ==  "Ready to connection")
+            {
+                StatusValueLbl.Text = "Ready to connection";
+                connectBtn.Enabled = true;
+            }
+            else
+            {
+                StatusValueLbl.Text = "ERROR";
+            }
+          //  throw new NotImplementedException();
 		}
-	}
 
-	interface ILoginForm: IInvokable
+        private void changeBtn_Click(object sender, EventArgs e)
+        { 
+           
+        }
+    }
+
+    interface ILoginForm: IInvokable
 	{
 		void LoginStatusChanged(bool status);
 		void AskForPermission(string remoteUserName);
