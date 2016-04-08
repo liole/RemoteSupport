@@ -27,34 +27,98 @@ namespace RemoteSupport.Server
 			return base.OnDisconnected(stopCalled);
 		}
 
-		public void CheckUserName (string userName)
-		{
+		// userName -> connectionId
+		public static Dictionary<string, string> ActiveUsers { get; set; }
+		public static List<BroadcastStatus> Broadcasts { get; set; }
 
+		static RSHub()
+		{
+			ActiveUsers = new Dictionary<string, string>();
+			Broadcasts = new List<BroadcastStatus>();
+		}
+
+		public void ChangekUserName (string userName)
+		{
+			if (ActiveUsers.ContainsKey(userName))
+			{
+				if (ActiveUsers[userName] != Context.ConnectionId)
+				{
+					Clients.Caller.LoginStatusChanged(false);
+				}
+				// else user name was the same
+			}
+			else
+			{
+				if (ActiveUsers.ContainsValue(Context.ConnectionId))
+				{
+					var oldUserName = ActiveUsers.FirstOrDefault(x => x.Value == "one").Key;
+					ActiveUsers.Remove(oldUserName);
+				}
+				ActiveUsers[userName] = Context.ConnectionId;
+				Clients.Caller.LoginStatusChanged(true);
+			}
 		}
 
 		public void AskForPermission(string userName)
 		{
-
+			if (ActiveUsers.ContainsKey(userName))
+			{
+				var connectionId = ActiveUsers[userName];
+				var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == connectionId);
+				if (broadcast == null)
+				{
+					broadcast = new BroadcastStatus() { 
+						Broadcaster = connectionId,
+						Active = false
+					};
+					Broadcasts.Add(broadcast);
+				}
+				broadcast.Pending = Context.ConnectionId;
+			}
+			else
+			{
+				Clients.Caller.UserNotFound();
+			}
 		}
 
 		public void StartStream()
 		{
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == Context.ConnectionId);
 			
+			if (broadcast.Pending != null)
+			{
+				Clients.Client(broadcast.Pending).AccessAllowed();
+				broadcast.Viewers.Add(broadcast.Pending);
+				Groups.Add(broadcast.Pending, broadcast.Broadcaster);
+				broadcast.Pending = null;
+			}
+			broadcast.Active = true;
 		}
 
 		public void DenyAccess()
 		{
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == Context.ConnectionId);
 
+			if (broadcast.Pending != null)
+			{
+				Clients.Client(broadcast.Pending).AccessDenied();
+				broadcast.Pending = null;
+			}
 		}
 
 		public void SendImage(object image)
 		{
-
+			Clients.Group(Context.ConnectionId).ShowImage(image);
 		}
 
 		public void MoveMouse (int x, int y)
 		{
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
 
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).MoveMouse(x, y);
+			}
 		}
 
 		public void Disconnect()

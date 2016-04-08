@@ -8,7 +8,7 @@ namespace RemoteSupport.Client.View
 {
 	interface IInvokable
 	{
-		public object Invoke(Delegate method);
-		public object Invoke(Delegate method, params object[] args);
+		object Invoke(Delegate method);
+		object Invoke(Delegate method, params object[] args);
 	}
 }
