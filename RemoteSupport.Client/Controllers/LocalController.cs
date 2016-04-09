@@ -20,26 +20,7 @@ namespace RemoteSupport.Client.Controllers
 		public static Size DefaultSize { get { return new Size(800, 450); } }
 		private ILoginForm loginForm;
         public int kw, kh;
-        private IHubProxy HubProxy { get; set; }
-        const string ServerURI = "http://localhost:51001/signalr";
-        private HubConnection Connection { get; set; }
-        private async void ConnectAsync()
-        {
-            Connection = new HubConnection(ServerURI);
-            HubProxy = Connection.CreateHubProxy("RSHub");
-            HubProxy.On("NewConnection", (Action<string>)this.NewConnection);
-            HubProxy.On("MoveMouse", (Action<int, int>)this.MoveMouse);
-            //?
-            try
-            {
-                await Connection.Start();
-            }
-            catch (HttpRequestException)
-            {
-                return;
-            }
-
-        }
+        
 
         [DllImport("user32.dll")]
         public static extern void mouse_event(uint dwFlags, int dx, int dy, uint cButtons, uint dwExtraInfo);
@@ -50,12 +31,15 @@ namespace RemoteSupport.Client.Controllers
             kw = Screen.PrimaryScreen.Bounds.Width / DefaultSize.Width;
             kh = Screen.PrimaryScreen.Bounds.Height / DefaultSize.Height;
             //?
-            ConnectAsync();
+            Program.ConnectionController.CommandHub.On("NewConnection", (Action<string>)this.NewConnection);
+            Program.ConnectionController.CommandHub.On("MoveMouse", (Action<int, int>)this.MoveMouse);
+            Program.ConnectionController.ConnectAsync();
+
 		}
 
 		public void Disconnect()
 		{
-            HubProxy.Invoke("Disconnect");
+            Program.ConnectionController.CommandHub.Invoke("Disconnect");
 		}
 
 		public void NewConnection(string remoteUserName)
@@ -66,16 +50,16 @@ namespace RemoteSupport.Client.Controllers
 		public void StartStream()
 		{
 			//send image
-            HubProxy.Invoke("StartStream");
+            Program.ConnectionController.CommandHub.Invoke("StartStream");
             Bitmap printscreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             Graphics graphics = Graphics.FromImage(printscreen as Image);
             graphics.CopyFromScreen(0, 0, 0, 0, printscreen.Size);
-            HubProxy.Invoke("SendImage", new Bitmap(printscreen, DefaultSize));
+            Program.ConnectionController.ImageHub.Invoke("SendImage", new Bitmap(printscreen, DefaultSize));
 		}
 
 		public void DenyAccess()
 		{
-            HubProxy.Invoke("DenyAccess");
+            Program.ConnectionController.CommandHub.Invoke("DenyAccess");
 		}
 
 		public void MoveMouse(int x, int y)
