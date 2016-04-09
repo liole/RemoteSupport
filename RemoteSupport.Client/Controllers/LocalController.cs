@@ -59,10 +59,11 @@ namespace RemoteSupport.Client.Controllers
 			Bitmap printscreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
 			Graphics graphics = Graphics.FromImage(printscreen as Image);
 			graphics.CopyFromScreen(0, 0, 0, 0, printscreen.Size);
-			var k = 9; // max experimental
+			var k = 40; // max experimental
 			printscreen = new Bitmap(printscreen, new Size(16 * k, 9 * k));
+			printscreen = printscreen.Clone(new Rectangle(0, 0, printscreen.Width, printscreen.Height), PixelFormat.Format16bppRgb555);
 			System.IO.MemoryStream stream = new System.IO.MemoryStream();
-			printscreen.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
+			printscreen.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
 			byte[] imageBytes = stream.ToArray();
 			string base64String = Convert.ToBase64String(imageBytes);
 			Program.ConnectionController.ImageHub.Invoke("SendImage", base64String);
