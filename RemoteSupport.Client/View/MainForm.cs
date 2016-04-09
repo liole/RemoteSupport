@@ -20,12 +20,14 @@ namespace RemoteSupport.Client.View
 		private HubConnection Connection { get; set; }
 
 		public LoginController login;
+		public LocalController local;
         private bool firstTime = false;
 
         public MainForm()
 		{
 			InitializeComponent();
 			login = new LoginController(this);
+			local = new LocalController(this);
             userNameTxt.Text = login.PCName();
             connectBtn.Enabled = false;
             firstTime = true;
@@ -86,6 +88,7 @@ namespace RemoteSupport.Client.View
 				Connection.Stop();
 				Connection.Dispose();
 			}
+			Program.ConnectionController.Dispose();
 		}
 
 
@@ -117,6 +120,7 @@ namespace RemoteSupport.Client.View
 			//var result = permissionDialog.ShowDialog();
 			//if (result == allow)
 			Hide();
+			local.StartStream();
 			//statusForm.UserName = remoteUserName;
 			//statusFrom.Show();
 			//localController.StartStream();
@@ -127,15 +131,11 @@ namespace RemoteSupport.Client.View
 
 		public void ChangeStatus(string status, bool error)
 		{
-            if (status ==  "Ready to connection")
+            if (!error)
             {
-                StatusValueLbl.Text = "Ready to connection";
                 connectBtn.Enabled = true;
-            }
-            else
-            {
-                StatusValueLbl.Text = status;
-            }
+            } 
+            StatusValueLbl.Text = status;
           //  throw new NotImplementedException();
 		}
 
@@ -143,6 +143,22 @@ namespace RemoteSupport.Client.View
         {
             login.TryChange(userNameTxt.Text);
         }
+
+		private void connectBtn_Click(object sender, EventArgs e)
+		{
+			Program.StreamForm.Show();
+			login.ConnectTo(this.connectToTxt.Text);
+		}
+
+		public void UserNotFound()
+		{
+			MessageBox.Show("User not found!");
+		}
+		public void Disconnected()
+		{
+			Show();
+			MessageBox.Show("Client disconnected!");
+		}
     }
 
     public interface ILoginForm: IInvokable
@@ -150,5 +166,7 @@ namespace RemoteSupport.Client.View
 		void LoginStatusChanged(bool status);
 		void AskForPermission(string remoteUserName);
 		void ChangeStatus(string status, bool error);
+		void UserNotFound();
+		void Disconnected();
 	}
 }

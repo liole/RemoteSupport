@@ -48,14 +48,31 @@ namespace RemoteSupport.Client.View
         private void disconnect_Btn_Click(object sender, EventArgs e)
         {
             remote.Disconnect();
+			Hide();
+			Program.MainForm.Show();
         }
+		public void Disconnected()
+		{
+			MessageBox.Show("Broadcaster disconnected!");
+			Hide();
+			Program.MainForm.Show();
+		}
+
+		private void StreamForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			e.Cancel = true;
+			remote.Disconnect();
+			Hide();
+			Program.MainForm.Show();
+		}
 	}
 
 
 
-	public interface IStreamForm
+	public interface IStreamForm : IInvokable
 	{
 		void ShowImage(Bitmap img);
 		Size ImageSize { get; }
+		void Disconnected();
 	}
 }

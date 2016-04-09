@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace RemoteSupport.Server
 {
@@ -78,6 +79,8 @@ namespace RemoteSupport.Server
 					Broadcasts.Add(broadcast);
 				}
 				broadcast.Pending = Context.ConnectionId;
+				var pendingClientName = ActiveUsers.FirstOrDefault(u => u.Value == Context.ConnectionId).Key;
+				Clients.Client(connectionId).NewConnection(pendingClientName);
 			}
 			else
 			{
@@ -112,9 +115,9 @@ namespace RemoteSupport.Server
 			}
 		}
 
-		public void SendImage(object image)
+		public void SendImage(string image)
 		{
-			Logger.OnMethodCalled("SendImage", image);
+			Logger.OnMethodCalled("SendImage", "[Base64Image]");
 			Clients.Group(Context.ConnectionId).ShowImage(image);
 		}
 
@@ -140,6 +143,17 @@ namespace RemoteSupport.Server
 			}
 		}
 
+		public void RequestImage()
+		{
+			Logger.OnMethodCalled("RequestImage");
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).RequestImage();
+			}
+		}
+
 		public void Disconnect()
 		{
 			// for only one viewer!
@@ -155,6 +169,7 @@ namespace RemoteSupport.Server
 			if (broadcast != null)
 			{
 				Clients.Client(broadcast.Broadcaster).ClientDisconnected();
+				Broadcasts.Remove(broadcast);
 			}
 		}
 	}

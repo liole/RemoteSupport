@@ -88,6 +88,7 @@
 			this.connectBtn.TabIndex = 4;
 			this.connectBtn.Text = "Connect";
 			this.connectBtn.UseVisualStyleBackColor = true;
+			this.connectBtn.Click += new System.EventHandler(this.connectBtn_Click);
 			// 
 			// StatusLbl
 			// 

@@ -19,6 +19,7 @@ namespace RemoteSupport.Client.Controllers
 			Program.ConnectionController.ConnectionFailed += ConnectionFailed;
 			Program.ConnectionController.ConnectAsync();
 			Program.ConnectionController.CommandHub.On("LoginStatusChanged", (Action<bool>)this.HandleStatusChange);
+			Program.ConnectionController.CommandHub.On("UserNotFound", (Action)this.UserNotFound);
 		}
 		public void TryChange(string newName)
 		{
@@ -27,7 +28,13 @@ namespace RemoteSupport.Client.Controllers
 
 		public void HandleStatusChange(bool status)
 		{
-			loginForm.LoginStatusChanged(status);
+			loginForm.Invoke((Action<bool>)loginForm.LoginStatusChanged, status);
+			//loginForm.LoginStatusChanged(status);
+		}
+
+		public void ConnectTo(string userName)
+		{
+			Program.ConnectionController.CommandHub.Invoke("AskForPermission", userName);
 		}
 
 		public string PCName ()
@@ -38,11 +45,18 @@ namespace RemoteSupport.Client.Controllers
 		public void ConnectionSucceded(object sender, EventArgs e)
 		{
             TryChange(PCName());
-			loginForm.ChangeStatus("Connected", false);
+			loginForm.Invoke((Action<string, bool>)loginForm.ChangeStatus, "Ready to connect", false);
+			//loginForm.ChangeStatus("Connected", false);
 		}
 		public void ConnectionFailed(object sender, EventArgs e)
 		{
-			loginForm.ChangeStatus("Unable to connect", true);
+			loginForm.Invoke((Action<string, bool>)loginForm.ChangeStatus, "Unable to connect", true);
+			//loginForm.ChangeStatus("Unable to connect", true);
+		}
+		public void UserNotFound()
+		{
+			loginForm.Invoke((Action)loginForm.UserNotFound);
+			loginForm.UserNotFound();
 		}
 	}
 }

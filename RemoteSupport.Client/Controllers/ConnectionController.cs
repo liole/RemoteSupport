@@ -24,6 +24,10 @@ namespace RemoteSupport.Client.Controllers
 
 		public  async void ConnectAsync()
 		{
+			if (connection != null)
+			{
+				return;
+			}
 			connection = new HubConnection(ServerURI);
 			//connection.Closed += Connection_Closed;
 			proxy = connection.CreateHubProxy("RSHub");
@@ -48,6 +52,7 @@ namespace RemoteSupport.Client.Controllers
 
 		public void Dispose ()
 		{
+			connection.Stop();
 			connection.Dispose();
 		}
 	}
