@@ -19,6 +19,7 @@ namespace RemoteSupport.Client.View
 		public StreamForm()
 		{
             InitializeComponent();
+			ClientSize = new Size(800+panel1.Width, 450);
             remote = new RemoteController(this); 
 		}
 
@@ -64,6 +65,59 @@ namespace RemoteSupport.Client.View
 			remote.Disconnect();
 			Hide();
 			Program.MainForm.Show();
+		}
+
+		private void toolStripButton2_Click(object sender, EventArgs e)
+		{
+			if (TopMost == false)
+			{
+				pictureBox1.SendToBack();
+				panel1.Width = 2;
+				toolStrip1.Hide();
+				FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				TopMost = true;
+				WindowState = FormWindowState.Maximized;
+			}
+			else
+			{
+				WindowState = FormWindowState.Normal;
+				TopMost = false;
+				FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+				toolStrip1.Show();
+				panel1.Width = 36;
+				pictureBox1.BringToFront();
+			}
+		}
+
+		private void panel1_MouseEnter(object sender, EventArgs e)
+		{
+			toolStrip1.Show();
+			panel1.Width = 36;
+		}
+
+		private void panel1_MouseLeave(object sender, EventArgs e)
+		{
+			if (TopMost)
+			{
+				panel1.Width = 2;
+				toolStrip1.Hide();
+			}
+		}
+
+		private void toolStripButton3_Click(object sender, EventArgs e)
+		{
+			remote.SetUseJPEG(toolStripButton3.Checked);
+		}
+
+		private void resolutionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			foreach(var item in toolStripDropDownButton1.DropDownItems)
+			{
+				(item as ToolStripMenuItem).Checked = false;
+			}
+			var btn = sender as ToolStripMenuItem;
+			btn.Checked = true;
+			remote.SetResolution(int.Parse(btn.Tag.ToString()));
 		}
 	}
 

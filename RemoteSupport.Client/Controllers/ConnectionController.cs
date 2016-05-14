@@ -17,7 +17,7 @@ namespace RemoteSupport.Client.Controllers
 		public IHubProxy CommandHub { get { return proxy; } }
 		public IHubProxy ImageHub { get { return proxy; } }
 
-		const string ServerURI = "http://localhost:51001/signalr";
+		const string ServerURI = "http://192.168.1.100:51001/signalr";
 
 		public event EventHandler ConnectionSucceded;
 		public event EventHandler ConnectionFailed;
@@ -35,6 +35,10 @@ namespace RemoteSupport.Client.Controllers
 			try
 			{
 				await connection.Start();
+				if (ConnectionSucceded != null)
+				{
+					ConnectionSucceded(this, null);
+				}
 			}
 			catch (HttpRequestException)
 			{
@@ -42,11 +46,6 @@ namespace RemoteSupport.Client.Controllers
 				{
 					ConnectionFailed(this, null);
 				}
-			}
-
-			if (ConnectionSucceded != null)
-			{
-				ConnectionSucceded(this, null);
 			}
 		}
 

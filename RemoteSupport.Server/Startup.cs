@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Cors;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace RemoteSupport.Server
 	{
 		public void Configuration(IAppBuilder app)
 		{
+			GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
+			GlobalHost.Configuration.DefaultMessageBufferSize = 30;
 			app.UseCors(CorsOptions.AllowAll);
 			app.MapSignalR();
 		}

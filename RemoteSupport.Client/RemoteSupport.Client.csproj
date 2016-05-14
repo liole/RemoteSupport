@@ -56,6 +56,7 @@
     <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="View\IInvokable.cs" />
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
@@ -112,6 +113,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

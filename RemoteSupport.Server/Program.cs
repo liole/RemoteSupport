@@ -12,7 +12,7 @@ namespace RemoteSupport.Server
 {
 	class Program
 	{
-		public static string ServerURI = "http://localhost:51001";
+		public static string ServerURI = "http://*:51001";
 
 		static void Main(string[] args)
 		{

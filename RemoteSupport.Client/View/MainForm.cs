@@ -134,8 +134,10 @@ namespace RemoteSupport.Client.View
             if (!error)
             {
                 connectBtn.Enabled = true;
+				changeBtn.Enabled = true;
             } 
             StatusValueLbl.Text = status;
+			StatusValueLbl.ForeColor = error ? Color.Red : Color.Green;
           //  throw new NotImplementedException();
 		}
 
@@ -147,6 +149,7 @@ namespace RemoteSupport.Client.View
 		private void connectBtn_Click(object sender, EventArgs e)
 		{
 			Program.StreamForm.Show();
+			Program.StreamForm.Text = this.connectToTxt.Text + " - RemoteSupport";
 			login.ConnectTo(this.connectToTxt.Text);
 		}
 

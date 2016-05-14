@@ -115,10 +115,47 @@ namespace RemoteSupport.Server
 			}
 		}
 
-		public void SendImage(string image)
+		public void StartSendingImage(int parts, int x, int y)
 		{
-			Logger.OnMethodCalled("SendImage", "[Base64Image]");
-			Clients.Group(Context.ConnectionId).ShowImage(image);
+			Logger.OnMethodCalled("StartSendingImage", parts, x, y);
+			Clients.Group(Context.ConnectionId).StartReceivingImage(parts, x, y);
+		}
+
+		public void SendImage(string image, int part)
+		{
+			Logger.OnMethodCalled("SendImage", "[Base64Image]", part);
+			Clients.Group(Context.ConnectionId).ShowImage(image, part);
+		}
+
+		public void SetUseJPEG(bool use)
+		{
+			Logger.OnMethodCalled("SetUserJPEG", use);
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).SetUseJPEG(use);
+			}
+		}
+		public void SetResolution(int width, int height)
+		{
+			Logger.OnMethodCalled("SetResolution", width, height);
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).SetResolution(width, height);
+			}
+		}
+		public void SetFPS(int fps)
+		{
+			Logger.OnMethodCalled("SetFPS", fps);
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).SetFPS(fps);
+			}
 		}
 
 		public void MoveMouse (int x, int y)

@@ -15,16 +15,64 @@ namespace RemoteSupport.Client.Controllers
 	{
 		private IStreamForm streamForm;
 
+		private Bitmap prevImage = null;
+		private string[] imageParts;
+		private int partsReceived = 0;
+		private Point imagePos;
+
+		public static Size[] sizes = new[] {
+			new Size(-1, -1),
+			new Size(480, 270),
+			new Size(640, 360),
+			new Size(800, 450),
+			new Size(1024, 576),
+			new Size(1280, 720),
+			new Size(1366, 768),
+			new Size(1920, 1080),
+		};
+		//public static int fpss = new[] {  };
+
 		public RemoteController (IStreamForm streamForm)
 		{
 			this.streamForm = streamForm;
-			Program.ConnectionController.ImageHub.On("ShowImage", (Action<string>)this.ReceiveImage);
+			Program.ConnectionController.ImageHub.On("StartReceivingImage", (Action<int, int, int>)this.StartReceivingImage);
+			Program.ConnectionController.ImageHub.On("ShowImage", (Action<string, int>)this.ReceiveImage);
 			Program.ConnectionController.CommandHub.On("BroadcasterDisconnected", (Action)this.BroadcasterDisconnected);
 		}
 
 		public void MouseMove(int x, int y)
 		{
-            Program.ConnectionController.CommandHub.Invoke("MoveMouse", x, y);
+			if (prevImage == null)
+			{
+				return;
+			}
+			var boxSize = streamForm.ImageSize;
+			var imgSize = prevImage.Size;
+			var boxRatio = (float)boxSize.Width / boxSize.Height;
+			var imgRatio = (float)imgSize.Width / imgSize.Height;
+			var posRatio = 1.0f;
+			var xShift = 0;
+			var yShift = 0;
+			if (boxRatio > imgRatio)
+			{
+				posRatio = (float)imgSize.Height / boxSize.Height;
+				var width = (int)(imgSize.Width / posRatio);
+				xShift = (boxSize.Width - width) / 2;
+			}
+			else
+			{
+				posRatio = (float)imgSize.Width / boxSize.Width;
+				var height = (int)(imgSize.Height / posRatio);
+				yShift = (boxSize.Height - height) / 2;
+			}
+			var imgX = (int)((x - xShift)*posRatio);
+			var imgY = (int)((y - yShift)*posRatio);
+			if (imgX < 0 || imgX > imgSize.Width ||
+				imgY < 0 || imgY > imgSize.Height)
+			{
+				return;
+			}
+            Program.ConnectionController.CommandHub.Invoke("MoveMouse", imgX, imgY);
 		}
 
         public void MouseClick()
@@ -37,10 +85,28 @@ namespace RemoteSupport.Client.Controllers
             //return new NotImplementedException();
         }
 
-        public void ReceiveImage(string image)
-        {
-			Bitmap bmpReturn = null;
+		public void StartReceivingImage(int parts, int x, int y)
+		{
+			imageParts = new string[parts];
+			partsReceived = 0;
+			imagePos = new Point(x, y);
+		}
 
+        public void ReceiveImage(string image, int part)
+        {
+			imageParts[part] = image;
+			partsReceived++;
+			if (partsReceived == imageParts.Length)
+			{
+				ShowImage();
+			}
+        }
+
+		public void ShowImage()
+		{
+			string image = String.Join("", imageParts);
+
+			Bitmap bmpReturn = null;
 			byte[] byteBuffer = Convert.FromBase64String(image);
 			MemoryStream memoryStream = new MemoryStream(byteBuffer);
 
@@ -50,18 +116,40 @@ namespace RemoteSupport.Client.Controllers
 
 			memoryStream.Close();
 
+			if (prevImage != null)
+			{
+				if (imagePos.X != -1)
+				{
+					var g = Graphics.FromImage(prevImage);
+					g.DrawImage(bmpReturn, imagePos);
+					bmpReturn = prevImage;
+				}
+			}
+			prevImage = bmpReturn;
+
 			streamForm.Invoke((Action<Bitmap>)streamForm.ShowImage, bmpReturn);
-            //streamForm.ShowImage(image as Bitmap);  
+			//streamForm.ShowImage(image as Bitmap);  
 			Program.ConnectionController.CommandHub.Invoke("RequestImage");
-        }
+		}
 
         public void Disconnect()
         {
+			prevImage = null;
             Program.ConnectionController.CommandHub.Invoke("Disconnect");
         }
 		public void BroadcasterDisconnected()
 		{
 			streamForm.Invoke((Action)streamForm.Disconnected);
+		}
+
+		public void SetUseJPEG(bool use)
+		{
+			Program.ConnectionController.CommandHub.Invoke("SetUseJPEG", use);
+		}
+		public void SetResolution(int index)
+		{
+			Program.ConnectionController.CommandHub.Invoke("SetResolution", 
+				sizes[index].Width, sizes[index].Height);
 		}
 	}
 }
