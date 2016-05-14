@@ -31,7 +31,16 @@ namespace RemoteSupport.Client.View
             userNameTxt.Text = login.PCName();
             connectBtn.Enabled = false;
             firstTime = true;
+
+			Program.StatusForm.OnDisconnectClicked += StatusForm_OnDisconnectClicked;
             //ChangeStatus("Ready to connect", true);
+		}
+
+		void StatusForm_OnDisconnectClicked(object sender, EventArgs e)
+		{
+			Program.StatusForm.HideStatus();
+			Show();
+			local.Disconnect();
 		}
 
 		public void ShowMessage(string msg)
@@ -123,8 +132,7 @@ namespace RemoteSupport.Client.View
 			{
 				Hide();
 				local.StartStream();
-				//statusForm.UserName = remoteUserName;
-				//statusFrom.Show();
+				Program.StatusForm.ShowStatus(remoteUserName);
 			}
 			else
 			{
@@ -164,6 +172,7 @@ namespace RemoteSupport.Client.View
 		}
 		public void Disconnected()
 		{
+			Program.StatusForm.HideStatus();
 			Show();
 			MessageBox.Show("Client disconnected!");
 		}

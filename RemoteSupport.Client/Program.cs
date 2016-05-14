@@ -13,6 +13,7 @@ namespace RemoteSupport.Client
 		public static ConnectionController ConnectionController { get; set; }
 		public static MainForm MainForm { get; set; }
 		public static StreamForm StreamForm { get; set; }
+		public static StatusForm StatusForm { get; set; }
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -22,6 +23,7 @@ namespace RemoteSupport.Client
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			ConnectionController = new ConnectionController();
+			Program.StatusForm = new StatusForm();
 			Program.MainForm = new MainForm();
 			Program.StreamForm = new StreamForm();
 			Application.Run(Program.MainForm);

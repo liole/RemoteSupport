@@ -169,14 +169,14 @@ namespace RemoteSupport.Server
 			}
 		}
 
-		public void ClickMouse()
+		public void ClickMouse(int clickType = 0)
 		{
 			Logger.OnMethodCalled("ClickMouse");
 			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
 
 			if (broadcast != null)
 			{
-				Clients.Client(broadcast.Broadcaster).ClickMouse();
+				Clients.Client(broadcast.Broadcaster).ClickMouse(clickType);
 			}
 		}
 

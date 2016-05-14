@@ -102,6 +102,9 @@
     <EmbeddedResource Include="View\PermissionDialog.resx">
       <DependentUpon>PermissionDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\StatusForm.resx">
+      <DependentUpon>StatusForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\StreamForm.resx">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </EmbeddedResource>

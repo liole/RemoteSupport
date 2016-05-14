@@ -57,6 +57,7 @@ namespace RemoteSupport.Client.View
 		{
 			MessageBox.Show("Broadcaster disconnected!");
 			Hide();
+			Program.StatusForm.HideStatus();
 			Program.MainForm.Show();
 		}
 
@@ -135,6 +136,21 @@ namespace RemoteSupport.Client.View
 		private void StreamForm_Shown(object sender, EventArgs e)
 		{
 			ShowMessage("Connecting ...");
+		}
+
+		private void pictureBox1_DoubleClick(object sender, EventArgs e)
+		{
+			remote.MouseDoubleClick();
+		}
+
+		private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+		{
+			remote.MouseDown();
+		}
+
+		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+		{
+			remote.MouseUp();
 		}
 	}
 

@@ -46,7 +46,7 @@ namespace RemoteSupport.Client.Controllers
             //?
             Program.ConnectionController.CommandHub.On("NewConnection", (Action<string>)this.NewConnection);
 			Program.ConnectionController.CommandHub.On("MoveMouse", (Action<int, int>)this.MoveMouse);
-			Program.ConnectionController.CommandHub.On("ClickMouse", (Action)this.ClickMouse);
+			Program.ConnectionController.CommandHub.On("ClickMouse", (Action<int>)this.ClickMouse);
 			Program.ConnectionController.CommandHub.On("RequestImage", (Action)this.RequestImage);
 			Program.ConnectionController.ImageHub.On("ClientDisconnected", (Action)this.ClientDisconnected);
 			Program.ConnectionController.CommandHub.On("SetUseJPEG", use => useJPEG = use);
@@ -184,9 +184,23 @@ namespace RemoteSupport.Client.Controllers
             //mouse_event(0x80 | 0x01, x * kw, y * kh, 0, 0);
 		}
 
-        public void ClickMouse()
+        public void ClickMouse(int clickType)
         {
-            mouse_event(0x02 | 0x04, 0, 0, 0, 0);
+			switch (clickType)
+			{
+				case 0:
+					mouse_event(0x02 | 0x04, 0, 0, 0, 0);
+					break;
+				case 1:
+					// mouse down
+					break;
+				case 2:
+					// mouse up
+					break;
+				case 3:
+					// double click
+					break;
+			}
         }
 
 		public void ClientDisconnected()

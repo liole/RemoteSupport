@@ -83,8 +83,23 @@ namespace RemoteSupport.Client.Controllers
 
         public void MouseClick()
         {
-            Program.ConnectionController.CommandHub.Invoke("ClickMouse");
+            Program.ConnectionController.CommandHub.Invoke("ClickMouse", 0);
         }
+
+		public void MouseDown()
+		{
+			Program.ConnectionController.CommandHub.Invoke("ClickMouse", 1);
+		}
+
+		public void MouseUp()
+		{
+			Program.ConnectionController.CommandHub.Invoke("ClickMouse", 2);
+		}
+
+		public void MouseDoubleClick()
+		{
+			Program.ConnectionController.CommandHub.Invoke("ClickMouse", 3);
+		}
 
         public void KeyPress()
         {
