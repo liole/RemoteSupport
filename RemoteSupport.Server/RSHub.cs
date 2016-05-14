@@ -209,5 +209,22 @@ namespace RemoteSupport.Server
 				Broadcasts.Remove(broadcast);
 			}
 		}
+
+		public void SendMessage(string message)
+		{
+			Logger.OnMethodCalled("SendMessage", message);
+			var userName = ActiveUsers.FirstOrDefault(u => u.Value == Context.ConnectionId).Key;
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Broadcaster == Context.ConnectionId);
+			if (broadcast == null)
+			{
+				broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+				
+			}
+			Clients.Group(broadcast.Broadcaster).SendMessage(userName, message);
+			if (!broadcast.Viewers.Contains(broadcast.Broadcaster))
+			{
+				Clients.Client(broadcast.Broadcaster).SendMessage(userName, message);
+			}
+		}
 	}
 }

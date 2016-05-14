@@ -51,12 +51,14 @@ namespace RemoteSupport.Client.View
         {
             remote.Disconnect();
 			Hide();
+			Program.ChatForm.Hide();
 			Program.MainForm.Show();
         }
 		public void Disconnected()
 		{
 			MessageBox.Show("Broadcaster disconnected!");
 			Hide();
+			Program.ChatForm.Hide();
 			Program.StatusForm.HideStatus();
 			Program.MainForm.Show();
 		}
@@ -66,6 +68,7 @@ namespace RemoteSupport.Client.View
 			e.Cancel = true;
 			remote.Disconnect();
 			Hide();
+			Program.ChatForm.Hide();
 			Program.MainForm.Show();
 		}
 
@@ -151,6 +154,11 @@ namespace RemoteSupport.Client.View
 		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
 		{
 			remote.MouseUp();
+		}
+
+		private void toolStripButton4_Click(object sender, EventArgs e)
+		{
+			Program.ChatForm.Show();
 		}
 	}
 

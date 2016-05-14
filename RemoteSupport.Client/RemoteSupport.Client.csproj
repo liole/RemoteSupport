@@ -55,11 +55,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="View\ChatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ChatForm.Designer.cs">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\IInvokable.cs" />
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
@@ -87,6 +94,9 @@
     <Compile Include="View\StreamForm.Designer.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\ChatForm.resx">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

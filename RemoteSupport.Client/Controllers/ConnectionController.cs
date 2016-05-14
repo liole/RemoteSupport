@@ -17,7 +17,7 @@ namespace RemoteSupport.Client.Controllers
 		public IHubProxy CommandHub { get { return proxy; } }
 		public IHubProxy ImageHub { get { return proxy; } }
 
-		const string ServerURI = "http://192.168.1.100:51001/signalr";
+		const string ServerURI = "http://localhost";
 
 		public event EventHandler ConnectionSucceded;
 		public event EventHandler ConnectionFailed;

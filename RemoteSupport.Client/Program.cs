@@ -14,6 +14,7 @@ namespace RemoteSupport.Client
 		public static MainForm MainForm { get; set; }
 		public static StreamForm StreamForm { get; set; }
 		public static StatusForm StatusForm { get; set; }
+		public static ChatForm ChatForm { get; set; }
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -26,6 +27,7 @@ namespace RemoteSupport.Client
 			Program.StatusForm = new StatusForm();
 			Program.MainForm = new MainForm();
 			Program.StreamForm = new StreamForm();
+			Program.ChatForm = new ChatForm();
 			Application.Run(Program.MainForm);
 		}
 	}

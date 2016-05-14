@@ -300,6 +300,7 @@
 			this.toolStripButton4.Name = "toolStripButton4";
 			this.toolStripButton4.Size = new System.Drawing.Size(33, 28);
 			this.toolStripButton4.Text = "Chat";
+			this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
 			// 
 			// toolStripSeparator1
 			// 
