@@ -32,6 +32,7 @@ namespace RemoteSupport.Client.View
 
         public void ShowImage(Bitmap img)
         {
+			centerLabel.Hide();
             pictureBox1.Image = img;
         }
 
@@ -119,6 +120,22 @@ namespace RemoteSupport.Client.View
 			btn.Checked = true;
 			remote.SetResolution(int.Parse(btn.Tag.ToString()));
 		}
+
+		public void ShowMessage(string msg)
+		{
+			centerLabel.Show();
+			centerLabel.Text = msg;
+		}
+
+		public void AccessDenied()
+		{
+			ShowMessage("Access denied!");
+		}
+
+		private void StreamForm_Shown(object sender, EventArgs e)
+		{
+			ShowMessage("Connecting ...");
+		}
 	}
 
 
@@ -128,5 +145,6 @@ namespace RemoteSupport.Client.View
 		void ShowImage(Bitmap img);
 		Size ImageSize { get; }
 		void Disconnected();
+		void AccessDenied();
 	}
 }

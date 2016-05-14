@@ -117,15 +117,19 @@ namespace RemoteSupport.Client.View
 
 		public void AskForPermission(string remoteUserName)
 		{
-			//var result = permissionDialog.ShowDialog();
-			//if (result == allow)
-			Hide();
-			local.StartStream();
-			//statusForm.UserName = remoteUserName;
-			//statusFrom.Show();
-			//localController.StartStream();
-			//else
-			//localController.DenyAccess();
+			var dialog = new PermissionDialog(remoteUserName);
+			var result = dialog.ShowDialog();
+			if (result == System.Windows.Forms.DialogResult.OK)
+			{
+				Hide();
+				local.StartStream();
+				//statusForm.UserName = remoteUserName;
+				//statusFrom.Show();
+			}
+			else
+			{
+				local.DenyAccess();
+			}
 		}
 
 
@@ -148,6 +152,7 @@ namespace RemoteSupport.Client.View
 
 		private void connectBtn_Click(object sender, EventArgs e)
 		{
+			Program.StreamForm.ShowMessage("Connecting ...");
 			Program.StreamForm.Show();
 			Program.StreamForm.Text = this.connectToTxt.Text + " - RemoteSupport";
 			login.ConnectTo(this.connectToTxt.Text);
@@ -155,7 +160,7 @@ namespace RemoteSupport.Client.View
 
 		public void UserNotFound()
 		{
-			MessageBox.Show("User not found!");
+			Program.StreamForm.ShowMessage("User not found");
 		}
 		public void Disconnected()
 		{

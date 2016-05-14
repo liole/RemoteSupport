@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.changeBtn = new System.Windows.Forms.Button();
 			this.userNameLbl = new System.Windows.Forms.Label();
 			this.userNameTxt = new System.Windows.Forms.TextBox();
@@ -156,9 +157,11 @@
 			this.Controls.Add(this.userNameTxt);
 			this.Controls.Add(this.userNameLbl);
 			this.Controls.Add(this.changeBtn);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximumSize = new System.Drawing.Size(500, 200);
 			this.MinimumSize = new System.Drawing.Size(300, 200);
 			this.Name = "MainForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.ResumeLayout(false);

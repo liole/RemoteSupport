@@ -56,7 +56,7 @@ namespace RemoteSupport.Client.Controllers
 		public void UserNotFound()
 		{
 			loginForm.Invoke((Action)loginForm.UserNotFound);
-			loginForm.UserNotFound();
+			//loginForm.UserNotFound();
 		}
 	}
 }

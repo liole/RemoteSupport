@@ -12,9 +12,16 @@ namespace RemoteSupport.Client.View
 {
 	public partial class PermissionDialog : Form
 	{
-		public PermissionDialog()
+		public string Name
+		{
+			get { return nameLabel.Text; }
+			set { nameLabel.Text = value; }
+		}
+
+		public PermissionDialog(string name = "")
 		{
 			InitializeComponent();
+			Name = name;
 		}
 	}
 }

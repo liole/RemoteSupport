@@ -38,6 +38,12 @@ namespace RemoteSupport.Client.Controllers
 			Program.ConnectionController.ImageHub.On("StartReceivingImage", (Action<int, int, int>)this.StartReceivingImage);
 			Program.ConnectionController.ImageHub.On("ShowImage", (Action<string, int>)this.ReceiveImage);
 			Program.ConnectionController.CommandHub.On("BroadcasterDisconnected", (Action)this.BroadcasterDisconnected);
+			Program.ConnectionController.ImageHub.On("AccessDenied", (Action)this.AccessDenied);
+		}
+
+		private void AccessDenied()
+		{
+			streamForm.Invoke((Action)streamForm.AccessDenied);
 		}
 
 		public void MouseMove(int x, int y)

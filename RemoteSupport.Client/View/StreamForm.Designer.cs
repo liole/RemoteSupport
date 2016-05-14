@@ -51,6 +51,10 @@
 			this.x720ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.x1080ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.centerLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -88,10 +92,13 @@
 			this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
+            this.toolStripSeparator2,
             this.toolStripButton2,
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2,
-            this.toolStripButton3});
+            this.toolStripButton3,
+            this.toolStripSeparator1,
+            this.toolStripButton4});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(36, 431);
@@ -271,6 +278,7 @@
 			// 
 			// toolStripButton3
 			// 
+			this.toolStripButton3.AutoSize = false;
 			this.toolStripButton3.CheckOnClick = true;
 			this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
@@ -280,23 +288,59 @@
 			this.toolStripButton3.Text = "toolStripButton3";
 			this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
 			// 
+			// toolStripButton4
+			// 
+			this.toolStripButton4.AutoSize = false;
+			this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+			this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton4.Name = "toolStripButton4";
+			this.toolStripButton4.Size = new System.Drawing.Size(33, 28);
+			this.toolStripButton4.Text = "Chat";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(33, 6);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(33, 6);
+			// 
+			// centerLabel
+			// 
+			this.centerLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.centerLabel.AutoSize = true;
+			this.centerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.centerLabel.ForeColor = System.Drawing.Color.White;
+			this.centerLabel.Location = new System.Drawing.Point(378, 200);
+			this.centerLabel.Name = "centerLabel";
+			this.centerLabel.Size = new System.Drawing.Size(127, 24);
+			this.centerLabel.TabIndex = 5;
+			this.centerLabel.Text = "Connecting ...";
+			// 
 			// StreamForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(823, 431);
+			this.Controls.Add(this.centerLabel);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.panel1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "StreamForm";
 			this.Text = "StreamForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StreamForm_FormClosing);
+			this.Shown += new System.EventHandler(this.StreamForm_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -324,5 +368,9 @@
 		private System.Windows.Forms.ToolStripMenuItem x1080ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem x720ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripButton toolStripButton3;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton toolStripButton4;
+		private System.Windows.Forms.Label centerLabel;
 	}
 }
