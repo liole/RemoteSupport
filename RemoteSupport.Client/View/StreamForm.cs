@@ -160,6 +160,17 @@ namespace RemoteSupport.Client.View
 		{
 			Program.ChatForm.Show();
 		}
+
+		private void fpsToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			foreach (var item in toolStripDropDownButton2.DropDownItems)
+			{
+				(item as ToolStripMenuItem).Checked = false;
+			}
+			var btn = sender as ToolStripMenuItem;
+			btn.Checked = true;
+			remote.SetFPS(int.Parse(btn.Tag.ToString()));
+		}
 	}
 
 

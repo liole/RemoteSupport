@@ -40,7 +40,7 @@ namespace RemoteSupport.Client.Controllers
 			this.loginForm = loginForm;
 
 			ImageSize = new Size(800, 450);
-			timer.Interval = 200;
+			timer.Interval = 1000/15;
 			timer.Tick += timer_Tick;
 
             //?
@@ -52,6 +52,7 @@ namespace RemoteSupport.Client.Controllers
 			Program.ConnectionController.CommandHub.On("SetUseJPEG", use => useJPEG = use);
 			Program.ConnectionController.CommandHub.On("SetResolution", (Action<int, int>)(
 				(w, h) => ImageSize = new Size(w, h)));
+			Program.ConnectionController.CommandHub.On("SetFPS", fps => timer.Interval = 1000/fps);
 		}
 
 		void timer_Tick(object sender, EventArgs e)

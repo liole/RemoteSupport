@@ -30,7 +30,7 @@ namespace RemoteSupport.Client.Controllers
 			new Size(1366, 768),
 			new Size(1920, 1080),
 		};
-		//public static int fpss = new[] {  };
+		public static int[] fpss = new[] { -1, 5, 10, 15, 20, 30 };
 
 		public RemoteController (IStreamForm streamForm)
 		{
@@ -150,7 +150,7 @@ namespace RemoteSupport.Client.Controllers
 
 			streamForm.Invoke((Action<Bitmap>)streamForm.ShowImage, bmpReturn);
 			//streamForm.ShowImage(image as Bitmap);  
-			Program.ConnectionController.CommandHub.Invoke("RequestImage");
+			//Program.ConnectionController.CommandHub.Invoke("RequestImage");
 		}
 
         public void Disconnect()
@@ -171,6 +171,11 @@ namespace RemoteSupport.Client.Controllers
 		{
 			Program.ConnectionController.CommandHub.Invoke("SetResolution", 
 				sizes[index].Width, sizes[index].Height);
+		}
+		public void SetFPS(int index)
+		{
+			Program.ConnectionController.CommandHub.Invoke("SetFPS",
+				fpss[index]);
 		}
 	}
 }

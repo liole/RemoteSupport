@@ -214,6 +214,7 @@
 			this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
 			this.toolStripMenuItem2.Tag = "2";
 			this.toolStripMenuItem2.Text = "10";
+			this.toolStripMenuItem2.Click += new System.EventHandler(this.fpsToolStripMenuItem1_Click);
 			// 
 			// toolStripMenuItem3
 			// 
@@ -223,6 +224,7 @@
 			this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
 			this.toolStripMenuItem3.Tag = "3";
 			this.toolStripMenuItem3.Text = "15";
+			this.toolStripMenuItem3.Click += new System.EventHandler(this.fpsToolStripMenuItem1_Click);
 			// 
 			// toolStripMenuItem4
 			// 
@@ -230,6 +232,7 @@
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
 			this.toolStripMenuItem4.Tag = "4";
 			this.toolStripMenuItem4.Text = "20";
+			this.toolStripMenuItem4.Click += new System.EventHandler(this.fpsToolStripMenuItem1_Click);
 			// 
 			// toolStripMenuItem5
 			// 
@@ -237,6 +240,7 @@
 			this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
 			this.toolStripMenuItem5.Tag = "5";
 			this.toolStripMenuItem5.Text = "30";
+			this.toolStripMenuItem5.Click += new System.EventHandler(this.fpsToolStripMenuItem1_Click);
 			// 
 			// autoToolStripMenuItem1
 			// 
@@ -244,6 +248,7 @@
 			this.autoToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
 			this.autoToolStripMenuItem1.Tag = "0";
 			this.autoToolStripMenuItem1.Text = "Auto";
+			this.autoToolStripMenuItem1.Click += new System.EventHandler(this.fpsToolStripMenuItem1_Click);
 			// 
 			// toolStripMenuItem6
 			// 
@@ -251,6 +256,7 @@
 			this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
 			this.toolStripMenuItem6.Tag = "1";
 			this.toolStripMenuItem6.Text = "5";
+			this.toolStripMenuItem6.Click += new System.EventHandler(this.fpsToolStripMenuItem1_Click);
 			// 
 			// toolStripButton2
 			// 
