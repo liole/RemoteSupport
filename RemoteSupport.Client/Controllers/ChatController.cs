@@ -26,6 +26,7 @@ namespace RemoteSupport.Client.Controllers
 		{
             string tmpStr = (user + ": " + message); 
             Program.ChatForm.txtPrintRecMess.Invoke(new Action(() => Program.ChatForm.txtPrintRecMess.Text = Program.ChatForm.txtPrintRecMess.Text + tmpStr + Environment.NewLine));
+
         }
 
        
