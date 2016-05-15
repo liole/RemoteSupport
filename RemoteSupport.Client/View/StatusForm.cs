@@ -13,6 +13,7 @@ namespace RemoteSupport.Client.View
 	public partial class StatusForm : Form
 	{
 		public event EventHandler<EventArgs> OnDisconnectClicked;
+		public event EventHandler<EventArgs> OnChatClicked;
 
 		int duration = 0;
 		public StatusForm()
@@ -56,6 +57,14 @@ namespace RemoteSupport.Client.View
 			if (OnDisconnectClicked != null)
 			{
 				OnDisconnectClicked(this, new EventArgs());
+			}
+		}
+
+		public void button2_Click(object sender, EventArgs e)
+		{
+			if (OnChatClicked != null)
+			{
+				OnChatClicked(this, new EventArgs());
 			}
 		}
 	}

@@ -15,6 +15,7 @@ namespace RemoteSupport.Client.View
 	{
         public RemoteController remote;
 
+		public string UserName { get; set; }
 
 		public StreamForm()
 		{
@@ -156,8 +157,9 @@ namespace RemoteSupport.Client.View
 			remote.MouseUp();
 		}
 
-		private void toolStripButton4_Click(object sender, EventArgs e)
+		public void toolStripButton4_Click(object sender, EventArgs e)
 		{
+			Program.ChatForm.UserName = UserName;
 			Program.ChatForm.Show();
 		}
 
@@ -181,5 +183,6 @@ namespace RemoteSupport.Client.View
 		Size ImageSize { get; }
 		void Disconnected();
 		void AccessDenied();
+		string UserName { get; set; }
 	}
 }

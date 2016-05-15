@@ -24,8 +24,20 @@ namespace RemoteSupport.Client.Controllers
 
         public void ReceiveMessage(string user, string message)
 		{
-            string tmpStr = (user + ": " + message); 
-            Program.ChatForm.txtPrintRecMess.Invoke(new Action(() => Program.ChatForm.txtPrintRecMess.Text = Program.ChatForm.txtPrintRecMess.Text + tmpStr + Environment.NewLine));
+			try
+			{
+				Program.StatusForm.Invoke((Action<object, EventArgs>)Program.StatusForm.button2_Click, this, null);
+			}
+			catch (Exception)
+			{
+				Program.StreamForm.Invoke((Action<object, EventArgs>)Program.StreamForm.toolStripButton4_Click, this, null);
+			}
+            string tmpStr = (@" \b " + user + @" \b0 : " + message);
+			if (user == chatForm.UserName)
+			{
+				tmpStr = @"\i Me \i0 : " + message;
+			}
+			chatForm.Invoke((Action<string>)chatForm.AppendLine, tmpStr);
 
         }
 

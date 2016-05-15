@@ -102,8 +102,11 @@ namespace RemoteSupport.Client.Controllers
 			var cursor = System.Windows.Forms.Cursor.Position;
 			var bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Location;
 			var pos = new Point(cursor.X - bounds.X, cursor.Y - bounds.Y);
-			var CurBounds = new System.Drawing.Rectangle(pos , System.Windows.Forms.Cursor.Current.Size);
-			System.Windows.Forms.Cursors.Default.Draw(graphics, CurBounds);
+			if (System.Windows.Forms.Cursor.Current != null)
+			{
+				var CurBounds = new System.Drawing.Rectangle(pos, System.Windows.Forms.Cursor.Current.Size);
+				System.Windows.Forms.Cursors.Default.Draw(graphics, CurBounds);
+			}
 			printscreen = new Bitmap(printscreen, ImageSize);
 			printscreen = printscreen.Clone(new Rectangle(0, 0, printscreen.Width, printscreen.Height), PixelFormat.Format16bppRgb555);
 			
