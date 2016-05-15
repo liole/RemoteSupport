@@ -29,7 +29,7 @@ namespace RemoteSupport.Client.Controllers
 				return;
 			}
 			connection = new HubConnection(ServerURI);
-			//connection.Closed += Connection_Closed;
+
 			proxy = connection.CreateHubProxy("RSHub");
 
 			try
