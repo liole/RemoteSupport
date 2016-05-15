@@ -33,7 +33,13 @@ namespace RemoteSupport.Client.View
             firstTime = true;
 
 			Program.StatusForm.OnDisconnectClicked += StatusForm_OnDisconnectClicked;
+			Program.StatusForm.OnChatClicked += StatusForm_OnChatClicked;
             //ChangeStatus("Ready to connect", true);
+		}
+
+		void StatusForm_OnChatClicked(object sender, EventArgs e)
+		{
+			Program.ChatForm.Show();
 		}
 
 		void StatusForm_OnDisconnectClicked(object sender, EventArgs e)
@@ -132,6 +138,7 @@ namespace RemoteSupport.Client.View
 			{
 				Hide();
 				local.StartStream();
+				Program.ChatForm.UserName = userNameTxt.Text;
 				Program.StatusForm.ShowStatus(remoteUserName);
 			}
 			else
@@ -160,6 +167,7 @@ namespace RemoteSupport.Client.View
 
 		private void connectBtn_Click(object sender, EventArgs e)
 		{
+			Program.StreamForm.UserName = this.userNameTxt.Text;
 			Program.StreamForm.ShowMessage("Connecting ...");
 			Program.StreamForm.Show();
 			Program.StreamForm.Text = this.connectToTxt.Text + " - RemoteSupport";

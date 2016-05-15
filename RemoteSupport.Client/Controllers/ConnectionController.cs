@@ -17,7 +17,7 @@ namespace RemoteSupport.Client.Controllers
 		public IHubProxy CommandHub { get { return proxy; } }
 		public IHubProxy ImageHub { get { return proxy; } }
 
-		const string ServerURI = "http://localhost";
+		const string ServerURI = "http://localhost:51001";
 
 		public event EventHandler ConnectionSucceded;
 		public event EventHandler ConnectionFailed;
