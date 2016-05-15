@@ -17,6 +17,8 @@ namespace RemoteSupport.Client.Controllers
 {
 	public class LocalController
 	{
+		public bool AllowControl { get; set; }
+
 		public static Size ImageSize { get; set; }
 		public static int MaxPartSize = 3000000;
 		private ILoginForm loginForm;
@@ -111,7 +113,7 @@ namespace RemoteSupport.Client.Controllers
 			printscreen = printscreen.Clone(new Rectangle(0, 0, printscreen.Width, printscreen.Height), PixelFormat.Format16bppRgb555);
 			
 			Rectangle diffRect = new Rectangle(-1, -1, printscreen.Width, printscreen.Height);
-			
+
 			if (prevImage != null)
 			{
 				if (prevImage.Width == printscreen.Width && prevImage.Height == printscreen.Height)
@@ -179,6 +181,10 @@ namespace RemoteSupport.Client.Controllers
 
 		public void MoveMouse(int x, int y)
 		{
+			if (!AllowControl)
+			{
+				return;
+			}
 			//int kx = k * x;
 			//...
 			kw = (float)Screen.PrimaryScreen.Bounds.Width / ImageSize.Width;
@@ -188,21 +194,31 @@ namespace RemoteSupport.Client.Controllers
             //mouse_event(0x80 | 0x01, x * kw, y * kh, 0, 0);
 		}
 
+		private const uint MOUSEEVENTF_LEFTDOWN = 0x02;
+		private const uint MOUSEEVENTF_LEFTUP = 0x04;
+		private const uint MOUSEEVENTF_RIGHTDOWN = 0x08;
+		private const uint MOUSEEVENTF_RIGHTUP = 0x10;
+
         public void ClickMouse(int clickType)
         {
+			if (!AllowControl)
+			{
+				return;
+			}
 			switch (clickType)
 			{
 				case 0:
-					mouse_event(0x02 | 0x04, 0, 0, 0, 0);
+					mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					break;
 				case 1:
-					// mouse down
+					mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 					break;
 				case 2:
-					// mouse up
+					mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					break;
 				case 3:
-					// double click
+					mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+					mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					break;
 			}
         }

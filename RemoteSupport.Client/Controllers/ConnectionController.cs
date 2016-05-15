@@ -11,13 +11,13 @@ namespace RemoteSupport.Client.Controllers
 {
 	public class ConnectionController : IDisposable
 	{
-		private HubConnection connection;
+		public HubConnection connection;
 		private IHubProxy proxy;
 
 		public IHubProxy CommandHub { get { return proxy; } }
 		public IHubProxy ImageHub { get { return proxy; } }
 
-		const string ServerURI = "http://localhost:51001";
+		public string ServerURI = "http://localhost:51001";
 
 		public event EventHandler ConnectionSucceded;
 		public event EventHandler ConnectionFailed;
@@ -46,6 +46,7 @@ namespace RemoteSupport.Client.Controllers
 				{
 					ConnectionFailed(this, null);
 				}
+				connection = null;
 			}
 		}
 

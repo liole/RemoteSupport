@@ -61,6 +61,12 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="View\AddressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\AddressForm.Designer.cs">
+      <DependentUpon>AddressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     <Compile Include="View\StreamForm.Designer.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\AddressForm.resx">
+      <DependentUpon>AddressForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>

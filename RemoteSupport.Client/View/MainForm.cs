@@ -134,9 +134,10 @@ namespace RemoteSupport.Client.View
 		{
 			var dialog = new PermissionDialog(remoteUserName);
 			var result = dialog.ShowDialog();
-			if (result == System.Windows.Forms.DialogResult.OK)
+			if (result != System.Windows.Forms.DialogResult.Cancel)
 			{
 				Hide();
+				local.AllowControl = result == System.Windows.Forms.DialogResult.OK;
 				local.StartStream();
 				Program.ChatForm.UserName = userNameTxt.Text;
 				Program.StatusForm.ShowStatus(remoteUserName);
@@ -183,6 +184,20 @@ namespace RemoteSupport.Client.View
 			Program.StatusForm.HideStatus();
 			Show();
 			MessageBox.Show("Client disconnected!");
+		}
+
+		private void pictureBox1_Click(object sender, EventArgs e)
+		{
+			var dialog = new AddressForm();
+			dialog.Address = Program.ConnectionController.ServerURI;
+			if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				Program.ConnectionController.ServerURI = dialog.Address;
+				StatusValueLbl.Text = "Connecting ...";
+				StatusValueLbl.ForeColor = Color.Orange;
+				Program.ConnectionController.connection = null;
+				Program.ConnectionController.ConnectAsync();
+			}
 		}
     }
 

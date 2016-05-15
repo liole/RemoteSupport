@@ -38,6 +38,8 @@
 			this.StatusLbl = new System.Windows.Forms.Label();
 			this.StatusValueLbl = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// changeBtn
@@ -140,6 +142,18 @@
 			this.label1.TabIndex = 9;
 			this.label1.Text = "Remote Support";
 			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(278, 9);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pictureBox1.TabIndex = 10;
+			this.pictureBox1.TabStop = false;
+			this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+			// 
 			// MainForm
 			// 
 			this.AcceptButton = this.connectBtn;
@@ -148,6 +162,7 @@
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(314, 161);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.StatusValueLbl);
 			this.Controls.Add(this.StatusLbl);
@@ -164,6 +179,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -179,6 +195,7 @@
         private System.Windows.Forms.Label StatusLbl;
         private System.Windows.Forms.Label StatusValueLbl;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
