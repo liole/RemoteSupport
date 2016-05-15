@@ -23,17 +23,24 @@ namespace RemoteSupport.Client.View
 
 		public void Clear()
 		{
-			//TODO: clear chat window
+            txtPrintRecMess.Clear();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
-		{
-			chat.SendMessage("Hello world!");
-		}
-	}
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            string str = txtSendMessage.Text;
+            chat.SendMessage(str);
+            txtSendMessage.Clear();
+        }
 
-	public interface IChatForm
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+    }
+
+    public interface IChatForm
 	{
 
-	}
+    }
 }
