@@ -37,6 +37,8 @@ namespace RemoteSupport.Client.Controllers
 
         [DllImport("user32.dll")]
         public static extern void mouse_event(uint dwFlags, int dx, int dy, uint cButtons, uint dwExtraInfo);
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
 		public LocalController (ILoginForm loginForm)
 		{
@@ -49,7 +51,9 @@ namespace RemoteSupport.Client.Controllers
             //?
             Program.ConnectionController.CommandHub.On("NewConnection", (Action<string>)this.NewConnection);
 			Program.ConnectionController.CommandHub.On("MoveMouse", (Action<int, int>)this.MoveMouse);
-			Program.ConnectionController.CommandHub.On("ClickMouse", (Action<int>)this.ClickMouse);
+            Program.ConnectionController.CommandHub.On("ClickMouse", (Action<int>)this.ClickMouse);
+            Program.ConnectionController.CommandHub.On("KeyPress", (Action<int>)this.KeyPress);
+            Program.ConnectionController.CommandHub.On("KeyRelease", (Action<int>)this.KeyRelease);
 			Program.ConnectionController.CommandHub.On("RequestImage", (Action)this.RequestImage);
 			Program.ConnectionController.ImageHub.On("ClientDisconnected", (Action)this.ClientDisconnected);
 			Program.ConnectionController.CommandHub.On("SetUseJPEG", use => useJPEG = use);
@@ -242,7 +246,16 @@ namespace RemoteSupport.Client.Controllers
 					break;
 			}
         }
-
+        const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
+        const uint KEYEVENTF_KEYUP = 0x0002;
+        public void KeyPress(int key)
+        {
+            keybd_event((byte)key, 0, KEYEVENTF_EXTENDEDKEY, 0);
+        }
+        public void KeyRelease(int key)
+        {
+            keybd_event((byte)key, 0, KEYEVENTF_KEYUP, 0);
+        }
 		public void ClientDisconnected()
 		{
 			timer.Stop();
