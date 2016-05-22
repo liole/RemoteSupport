@@ -31,6 +31,7 @@ namespace RemoteSupport.Client.Controllers
 			new Size(1920, 1080),
 		};
 		public static int[] fpss = new[] { -1, 5, 10, 15, 20, 30 };
+		private bool needRequestImage = false;
 
 		public RemoteController (IStreamForm streamForm)
 		{
@@ -119,6 +120,10 @@ namespace RemoteSupport.Client.Controllers
 			partsReceived++;
 			if (partsReceived == imageParts.Length)
 			{
+				if (needRequestImage)
+				{
+					Program.ConnectionController.CommandHub.Invoke("RequestImage");
+				}
 				ShowImage();
 			}
         }
@@ -176,6 +181,7 @@ namespace RemoteSupport.Client.Controllers
 		{
 			Program.ConnectionController.CommandHub.Invoke("SetFPS",
 				fpss[index]);
+			needRequestImage = index == 0;
 		}
 	}
 }

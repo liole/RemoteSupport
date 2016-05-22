@@ -25,13 +25,14 @@ namespace RemoteSupport.Client.Controllers
         public float kw, kh;
 
 		private Bitmap prevImage = null;
-		private Timer timer = new Timer();
+		private System.Timers.Timer timer = new System.Timers.Timer();
 
 		public static int intervalsCount = 5;
 		private long prevTime = 0;
 		private List<int> intervals = new List<int>();
 
 		public bool useJPEG = false;
+		public bool autoFPS = false;
         
 
         [DllImport("user32.dll")]
@@ -43,7 +44,7 @@ namespace RemoteSupport.Client.Controllers
 
 			ImageSize = new Size(800, 450);
 			timer.Interval = 1000/15;
-			timer.Tick += timer_Tick;
+			timer.Elapsed += timer_Tick;
 
             //?
             Program.ConnectionController.CommandHub.On("NewConnection", (Action<string>)this.NewConnection);
@@ -54,12 +55,32 @@ namespace RemoteSupport.Client.Controllers
 			Program.ConnectionController.CommandHub.On("SetUseJPEG", use => useJPEG = use);
 			Program.ConnectionController.CommandHub.On("SetResolution", (Action<int, int>)(
 				(w, h) => ImageSize = new Size(w, h)));
-			Program.ConnectionController.CommandHub.On("SetFPS", fps => timer.Interval = 1000/fps);
+			Program.ConnectionController.CommandHub.On("SetFPS", (Action<int>)this.setFPS);
+		}
+
+		void setFPS(int fps)
+		{
+			timer.Stop();
+			if (fps > 0)
+			{
+				autoFPS = false;
+				timer.Interval = 1000 / fps;
+				timer.Start();
+			}
+			else
+			{
+				autoFPS = true;
+				timer.Interval = 1000 / 30;
+			}
 		}
 
 		void timer_Tick(object sender, EventArgs e)
 		{
-			SendImage();
+			var imageSent = SendImage();
+			if (autoFPS && imageSent)
+			{
+				timer.Stop();
+			}
 		}
 
 		public void Disconnect()
@@ -78,15 +99,13 @@ namespace RemoteSupport.Client.Controllers
 
 		public void RequestImage()
 		{
-			/*
-			var currTime = DateTime.Now.Ticks;
-			intervals.Insert(0, (int)((currTime - prevTime) / TimeSpan.TicksPerMillisecond));
-			if (intervals.Count > intervalsCount)
+			if (autoFPS)
 			{
-				intervals = intervals.Take(intervalsCount).ToList();
+				if (!SendImage())
+				{
+					timer.Start();
+				}
 			}
-			timer.Interval = (int)intervals.Average();
-			 * */
 		}
 
 		public void StartStream()
@@ -96,7 +115,7 @@ namespace RemoteSupport.Client.Controllers
 			SendImage();
 		}
 
-		public void SendImage()
+		public bool SendImage()
 		{
 			Bitmap printscreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
 			Graphics graphics = Graphics.FromImage(printscreen as Image);
@@ -125,7 +144,7 @@ namespace RemoteSupport.Client.Controllers
 					}
 					else
 					{
-						return;
+						return false;
 					}
 				}
 			}
@@ -172,6 +191,7 @@ namespace RemoteSupport.Client.Controllers
 				}
 				Program.ConnectionController.ImageHub.Invoke("SendImage", partImage, i);
 			}
+			return true;
 		}
 
 		public void DenyAccess()

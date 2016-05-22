@@ -195,6 +195,7 @@ namespace RemoteSupport.Client.View
 				Program.ConnectionController.ServerURI = dialog.Address;
 				StatusValueLbl.Text = "Connecting ...";
 				StatusValueLbl.ForeColor = Color.Orange;
+				local.Disconnect();
 				Program.ConnectionController.connection = null;
 				Program.ConnectionController.ConnectAsync();
 			}

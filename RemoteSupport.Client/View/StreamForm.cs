@@ -173,6 +173,35 @@ namespace RemoteSupport.Client.View
 			btn.Checked = true;
 			remote.SetFPS(int.Parse(btn.Tag.ToString()));
 		}
+
+		private void StreamForm_Resize(object sender, EventArgs e)
+		{
+			int sizeIndex;
+			if (!int.TryParse(
+				toolStripDropDownButton1.DropDownItems
+				.OfType<ToolStripMenuItem>()
+				.FirstOrDefault(m => m.Checked)
+				.Tag.ToString(),
+				out sizeIndex))
+			{
+				return;
+			}
+			var size = pictureBox1.Size;
+			var newSize = RemoteController.sizes
+				.FirstOrDefault(s => s.Width >= size.Width || s.Height >= size.Height);
+			if (newSize == null)
+			{
+				newSize = RemoteController.sizes.Last();
+			}
+			var newIndex = RemoteController.sizes.ToList().IndexOf(newSize);
+			if (newIndex > 0 && newIndex != sizeIndex)
+			{
+				//remote.SetResolution(newIndex);
+				toolStripDropDownButton1.DropDownItems
+				.OfType<ToolStripMenuItem>()
+				.FirstOrDefault(m => m.Tag.ToString() == newIndex.ToString()).PerformClick();
+			}
+		}
 	}
 
 
