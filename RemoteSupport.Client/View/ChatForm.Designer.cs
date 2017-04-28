@@ -77,6 +77,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(279, 256);
+			this.ControlBox = false;
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.txtSendMessage);
 			this.Controls.Add(this.btnSend);

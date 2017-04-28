@@ -345,6 +345,8 @@
 			this.Text = "StreamForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StreamForm_FormClosing);
 			this.Shown += new System.EventHandler(this.StreamForm_Shown);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StreamForm_KeyDown);
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.StreamForm_KeyUp);
 			this.Resize += new System.EventHandler(this.StreamForm_Resize);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panel1.ResumeLayout(false);

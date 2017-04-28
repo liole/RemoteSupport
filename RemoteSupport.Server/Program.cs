@@ -23,14 +23,14 @@ namespace RemoteSupport.Server
 		const int SW_HIDE = 0;
 		const int SW_SHOW = 5;
 
-		public static string ServerURI = "http://localhost:51001";
+		public static string ServerURI = "http://*:51001";
 
 		static void Main(string[] args)
 		{
 			var handle = GetConsoleWindow();
 
 			// Hide
-			//ShowWindow(handle, SW_HIDE);
+			ShowWindow(handle, SW_HIDE);
 
 			RSHub.Logger = new ConsoleLogger(); // new EmptyLogger(); 
 			Console.WriteLine("Starting server...");

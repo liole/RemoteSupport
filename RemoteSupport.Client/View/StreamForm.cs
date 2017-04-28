@@ -202,6 +202,16 @@ namespace RemoteSupport.Client.View
 				.FirstOrDefault(m => m.Tag.ToString() == newIndex.ToString()).PerformClick();
 			}
 		}
+
+		private void StreamForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			remote.KeyDown(e.KeyCode);
+		}
+
+		private void StreamForm_KeyUp(object sender, KeyEventArgs e)
+		{
+			remote.KeyUp(e.KeyCode);
+		}
 	}
 
 

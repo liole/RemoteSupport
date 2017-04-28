@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client;
 using System.IO;
+using System.Windows.Forms;
 
 namespace RemoteSupport.Client.Controllers
 {
@@ -95,6 +96,16 @@ namespace RemoteSupport.Client.Controllers
 		public void MouseUp()
 		{
 			Program.ConnectionController.CommandHub.Invoke("ClickMouse", 2);
+		}
+
+		public void KeyDown(Keys key)
+		{
+			Program.ConnectionController.CommandHub.Invoke("KeyPress", (int)key);
+		}
+
+		public void KeyUp(Keys key)
+		{
+			Program.ConnectionController.CommandHub.Invoke("KeyRelease", (int)key);
 		}
 
 		public void MouseDoubleClick()

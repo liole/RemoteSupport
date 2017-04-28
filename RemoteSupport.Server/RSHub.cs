@@ -158,6 +158,28 @@ namespace RemoteSupport.Server
 			}
 		}
 
+		public void KeyPress(int key)
+		{
+			Logger.OnMethodCalled("KeyPress", key);
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).KeyPress(key);
+			}
+		}
+
+		public void KeyRelease(int key)
+		{
+			Logger.OnMethodCalled("KeyRelease", key);
+			var broadcast = Broadcasts.FirstOrDefault(b => b.Viewers.Contains(Context.ConnectionId));
+
+			if (broadcast != null)
+			{
+				Clients.Client(broadcast.Broadcaster).KeyRelease(key);
+			}
+		}
+
 		public void MoveMouse (int x, int y)
 		{
 			Logger.OnMethodCalled("MoveMouse", x, y);

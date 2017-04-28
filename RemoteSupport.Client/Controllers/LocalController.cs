@@ -116,6 +116,7 @@ namespace RemoteSupport.Client.Controllers
 		{
 			Program.ConnectionController.CommandHub.Invoke("StartStream");
 			timer.Start();
+			prevImage = null;
 			SendImage();
 		}
 
@@ -248,13 +249,22 @@ namespace RemoteSupport.Client.Controllers
         }
         const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
         const uint KEYEVENTF_KEYUP = 0x0002;
+
         public void KeyPress(int key)
         {
+			if (!AllowControl)
+			{
+				return;
+			}
             keybd_event((byte)key, 0, KEYEVENTF_EXTENDEDKEY, 0);
         }
         public void KeyRelease(int key)
         {
-            keybd_event((byte)key, 0, KEYEVENTF_KEYUP, 0);
+			if (!AllowControl)
+			{
+				return;
+			}
+			keybd_event((byte)key, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         }
 		public void ClientDisconnected()
 		{

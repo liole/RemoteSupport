@@ -17,7 +17,7 @@ namespace RemoteSupport.Client.Controllers
 		public IHubProxy CommandHub { get { return proxy; } }
 		public IHubProxy ImageHub { get { return proxy; } }
 
-		public string ServerURI = "http://localhost:51001";
+		public string ServerURI = "http://172.16.4.106:51001";
 
 		public event EventHandler ConnectionSucceded;
 		public event EventHandler ConnectionFailed;
