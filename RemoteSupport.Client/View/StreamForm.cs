@@ -37,9 +37,9 @@ namespace RemoteSupport.Client.View
             pictureBox1.Image = img;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+		private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            remote.MouseClick();
+            remote.MouseClick(e.Button == System.Windows.Forms.MouseButtons.Left);
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -149,12 +149,12 @@ namespace RemoteSupport.Client.View
 
 		private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
 		{
-			remote.MouseDown();
+			remote.MouseDown(e.Button == System.Windows.Forms.MouseButtons.Left);
 		}
 
 		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
 		{
-			remote.MouseUp();
+			remote.MouseUp(e.Button == System.Windows.Forms.MouseButtons.Left);
 		}
 
 		public void toolStripButton4_Click(object sender, EventArgs e)

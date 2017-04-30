@@ -83,19 +83,19 @@ namespace RemoteSupport.Client.Controllers
             Program.ConnectionController.CommandHub.Invoke("MoveMouse", imgX, imgY);
 		}
 
-        public void MouseClick()
+        public void MouseClick(bool left)
         {
-            Program.ConnectionController.CommandHub.Invoke("ClickMouse", 0);
+            Program.ConnectionController.CommandHub.Invoke("ClickMouse", left ? 0 : 4);
         }
 
-		public void MouseDown()
+		public void MouseDown(bool left)
 		{
-			Program.ConnectionController.CommandHub.Invoke("ClickMouse", 1);
+			Program.ConnectionController.CommandHub.Invoke("ClickMouse", left ? 1 : 5);
 		}
 
-		public void MouseUp()
+		public void MouseUp(bool left)
 		{
-			Program.ConnectionController.CommandHub.Invoke("ClickMouse", 2);
+			Program.ConnectionController.CommandHub.Invoke("ClickMouse", left ? 2 : 6);
 		}
 
 		public void KeyDown(Keys key)

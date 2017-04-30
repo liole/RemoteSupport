@@ -245,6 +245,15 @@ namespace RemoteSupport.Client.Controllers
 					mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					break;
+				case 4:
+					mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+					break;
+				case 5:
+					mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+					break;
+				case 6:
+					mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+					break;
 			}
         }
         const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
